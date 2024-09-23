@@ -18,6 +18,9 @@ Alternatively, If you want to use multiple of other different NTP servers, you c
 - `NTP_SERVER_#_ADDR`: NTP Server `#` address. (Required, if `NTP_SERVER_COUNT` > 0)
 - `NTP_SERVER_#_NTS`: Enable NTS (Network Time Security) for NTP Server `#`. (Optional, can be `true` or `false`)
 
+> [!NOTE]
+> The `DEFAULT_NTP_SERVER` environment variable will be ignored if `NTP_SERVER_COUNT` is set.
+
 ### Chronyd Options
 
 - `LOGLEVEL`: Log level. Default: `0`
@@ -65,6 +68,7 @@ By using NTP Pool Project, chances are you will connect to server raning from St
 | Apple NTP     | `time.apple.com`    |                                                                                      |
 | Microsoft NTP | `time.windows.com`  |                                                                                      |
 
+> [!NOTE]
 > If you are looking for Stratum One servers, you can check the following sites:
 > - https://support.ntp.org/Servers/StratumOneTimeServers
 > - https://www.advtimesync.com/docs/manual/stratum1.html
