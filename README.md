@@ -1,3 +1,5 @@
+<img src=".github/assets/ntppool.png" width="200px" /><br/>
+
 # About
 This container runs [chrony](https://chrony-project.org/) on [Alpine Linux](https://alpinelinux.org/).
 
