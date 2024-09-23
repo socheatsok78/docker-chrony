@@ -45,7 +45,7 @@ The container exposes [Prometheus](https://prometheus.io/) metrics at `http://<c
 
 <img src=".github/assets/ntppool.png" width="64px" /><br/>
 
-By default, this container will syncronize time from pool.ntp.org.
+By default, this container will syncronize time from `pool.ntp.org`.
 
 ## License
 Licensed under the GNU General Public License v3.0.  
