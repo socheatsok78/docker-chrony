@@ -1,4 +1,4 @@
-<img src=".github/assets/ntppool.png" width="200px" /><br/>
+<img src=".github/assets/ntppool.png" width="64px" /><br/>
 
 # About
 Just another container image for running NTP Server using `chrony` with support for Linux capabilities using `SYS_TIME` & `IPC_LOCK`.
