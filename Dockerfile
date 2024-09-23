@@ -1,6 +1,8 @@
+ARG ALPINE_VERSION=latest
+
 FROM quay.io/superq/chrony-exporter AS chrony-exporter
 
-FROM alpine:latest
+FROM alpine:${ALPINE_VERSION}
 RUN apk add --no-cache bash chrony curl libcap tzdata
 COPY --from=chrony-exporter /bin/chrony_exporter /bin/chrony_exporter
 EXPOSE 123/udp

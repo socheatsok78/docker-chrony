@@ -10,6 +10,13 @@ jobs:
     permissions:
       contents: read
       packages: write
+    strategy:
+      matrix:
+        alpine: 
+          - "3.17"
+          - "3.18"
+          - "3.19"
+          - "3.20"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,14 +37,15 @@ jobs:
       - name: Generate Docker metadata
         id: docker-meta
         uses: docker/metadata-action@v5
+        env:
+          ALPINE_VERSION: ${{ matrix.alpine }}
         with:
           images: |
             ghcr.io/socheatsok78/chrony
           flavor: latest=false
           tags: |
             type=ref,event=branch
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=${{ matrix.alpine }}
 
       - name: Generate GitHub metadata
         id: github-meta
