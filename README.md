@@ -18,7 +18,7 @@ Alternatively, If you want to use multiple of other different NTP servers, you c
 - `NTP_SERVER_#_ADDR`: NTP Server `#` address. (Required, if `NTP_SERVER_COUNT` > 0)
 - `NTP_SERVER_#_NTS`: Enable NTS (Network Time Security) for NTP Server `#`. (Optional, can be `true` or `false`)
 
-> [!NOTE]
+> [!WARNING]
 > The `DEFAULT_NTP_SERVER` environment variable will be ignored if `NTP_SERVER_COUNT` is set.
 
 ### Chronyd Options
@@ -73,7 +73,8 @@ With `IPC_LOCK` capability, this allows the container to lock memory. By default
 
 You can disable this feature by setting the `SKIP_SETCAP_IPC_LOCK` environment variable to `true`.
 
-You can read more about *Runtime privilege and Linux capabilities* in the documentation [here](https://docs.docker.com/engine/containers/run/#runtime-privilege-and-linux-capabilities).
+> [!NOTE]
+> You can read more about **Runtime privilege and Linux capabilities** in the documentation [here](https://docs.docker.com/engine/containers/run/#runtime-privilege-and-linux-capabilities).
 
 ## License
 Licensed under the GNU General Public License v3.0.  
