@@ -41,7 +41,7 @@ You can disable this feature by setting the `SKIP_SETCAP_IPC_LOCK` environment v
 
 The container exposes [Prometheus](https://prometheus.io/) metrics at `http://<container-ip>:9123/metrics` by default. The metrics are served by [chrony_exporter](https://github.com/SuperQ/chrony_exporter).
 
-# NTP Pool Project
+## NTP Pool Project
 
 <img src=".github/assets/ntppool.png" width="64px" /><br/>
 
