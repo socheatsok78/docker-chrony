@@ -1,7 +1,7 @@
 <img src=".github/assets/ntppool.png" width="200px" /><br/>
 
 # About
-Just another NTP Server using `chrony` with support for Linux capabilities using `SYS_TIME` & `IPC_LOCK`.
+Just another container image of NTP Server using `chrony` with support for Linux capabilities using `SYS_TIME` & `IPC_LOCK`.
 
 This container runs [chrony](https://chrony-project.org/) on [Alpine Linux](https://alpinelinux.org/).
 
