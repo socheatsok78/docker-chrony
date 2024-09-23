@@ -14,6 +14,9 @@ jobs:
           - "3.18"
           - "3.19"
           - "3.20"
+    permissions:
+      contents: read
+      packages: write
     uses: socheatsok78/.github/.github/workflows/docker-bake-action.yml@main
     with:
       images: |
