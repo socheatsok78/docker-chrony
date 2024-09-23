@@ -28,23 +28,6 @@ Alternatively, If you want to use multiple of other different NTP servers, you c
 - `NOCLIENTLOG`: This option disables logging of client requests and responses. Default: `false`
   > Specifies that client accesses are not to be logged. Normally they are logged, allowing statistics to be reported using the clients command in chronyc. This option also effectively disables server support for the NTP interleaved mode.
 
-## Container Capabilities
-The container can be configured to perform the following actions, and all of them are optional features.
-
-### Set the capability to update system time
-With `SYS_TIME` capability, this allows the container to update the system time. By default, this capability is not set. Once the `--cap-add SYS_TIME` provided to the container, `chrony` will be able to update the system time if necessary.
-
-You can disable this feature by setting the `SKIP_SETCAP_SYS_TIME` environment variable to `true`.
-
-### Set the capability to lock memory
-With `IPC_LOCK` capability, this allows the container to lock memory. By default, this capability is not set. Once the `--cap-add IPC_LOCK` provided to the container, `chrony` will be able to lock memory and prevent it from being swapped out.
-
-You can disable this feature by setting the `SKIP_SETCAP_IPC_LOCK` environment variable to `true`.
-
-## Prometheus Metrics
-
-The container exposes [Prometheus](https://prometheus.io/) metrics at `http://<container-ip>:9123/metrics` by default. The metrics are served by [chrony_exporter](https://github.com/SuperQ/chrony_exporter).
-
 ## NTP Pool Project
 
 <img src=".github/assets/ntppool.png" width="64px" /><br/>
@@ -72,6 +55,23 @@ By using NTP Pool Project, chances are you will connect to server raning from St
 > If you are looking for Stratum One servers, you can check the following sites:
 > - https://support.ntp.org/Servers/StratumOneTimeServers
 > - https://www.advtimesync.com/docs/manual/stratum1.html
+
+## Prometheus Metrics
+
+The container exposes [Prometheus](https://prometheus.io/) metrics at `http://<container-ip>:9123/metrics` by default. The metrics are served by [chrony_exporter](https://github.com/SuperQ/chrony_exporter).
+
+## Container Capabilities
+The container can be configured to perform the following actions, and all of them are optional features.
+
+### Set the capability to update system time
+With `SYS_TIME` capability, this allows the container to update the system time. By default, this capability is not set. Once the `--cap-add SYS_TIME` provided to the container, `chrony` will be able to update the system time if necessary.
+
+You can disable this feature by setting the `SKIP_SETCAP_SYS_TIME` environment variable to `true`.
+
+### Set the capability to lock memory
+With `IPC_LOCK` capability, this allows the container to lock memory. By default, this capability is not set. Once the `--cap-add IPC_LOCK` provided to the container, `chrony` will be able to lock memory and prevent it from being swapped out.
+
+You can disable this feature by setting the `SKIP_SETCAP_IPC_LOCK` environment variable to `true`.
 
 ## License
 Licensed under the GNU General Public License v3.0.  
