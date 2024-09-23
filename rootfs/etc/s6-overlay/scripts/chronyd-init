@@ -2,7 +2,8 @@
 set -e
 ME=$(basename $0)
 CHRONY_CONF_FILE="/etc/chrony/chrony.conf"
-DEFAULT_NTP_SERVER=${DEFAULT_NTP_SERVER:-"pool.ntp.org"}
+DEFAULT_NTP_SERVER_NTS=${DEFAULT_NTP_SERVER_NTS:-"false"}
+DEFAULT_NTP_SERVER_ADDR=${DEFAULT_NTP_SERVER_ADDR:-"pool.ntp.org"}
 
 # Generate a default chrony configuration file
 {
@@ -21,8 +22,8 @@ DEFAULT_NTP_SERVER=${DEFAULT_NTP_SERVER:-"pool.ntp.org"}
 # If NTP_SERVER_COUNT is not set, add the default NTP_SERVER
 if [ -z "${NTP_SERVER_COUNT}" ]; then
   NTP_SERVER_COUNT=1
-  NTP_SERVER_1_NTS=false
-  NTP_SERVER_1_ADDR="${DEFAULT_NTP_SERVER}"
+  NTP_SERVER_1_NTS="${DEFAULT_NTP_SERVER_NTS}"
+  NTP_SERVER_1_ADDR="${DEFAULT_NTP_SERVER_ADDR}"
 fi
 
 # Loop for the number of NTP_SERVER_COUNT and add the NTP_SERVER_#_ADDR to the chrony.conf
