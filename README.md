@@ -11,9 +11,9 @@ You can configure chrony by setting the following environment variables:
 
 ### Configure NTP Servers
 
-By default, the container will use `DEFAULT_NTP_SERVER` environment variable to set the default NTP server.
+By default, the container will use `DEFAULT_NTP_SERVER` environment variable to set the default NTP server. You can set this environment variable to the NTP server you want to use.
 
-If you want to use multiple NTP servers, you can set the following environment variables:
+Alternatively, If you want to use multiple of other different NTP servers, you can set the following environment variables:
 - `NTP_SERVER_COUNT`: Number of NTP servers to use. (Default unset)
 - `NTP_SERVER_#_ADDR`: NTP Server `#` address. (Required, if `NTP_SERVER_COUNT` > 0)
 - `NTP_SERVER_#_NTS`: Enable NTS (Network Time Security) for NTP Server `#`. (Optional, can be `true` or `false`)
@@ -46,7 +46,28 @@ The container exposes [Prometheus](https://prometheus.io/) metrics at `http://<c
 
 <img src=".github/assets/ntppool.png" width="64px" /><br/>
 
-By default, this container will syncronize time from `pool.ntp.org`.
+By default, this container will syncronize time from `pool.ntp.org` provided by the [NTP Pool Project](https://www.ntppool.org/). You can change the default NTP server by setting the `DEFAULT_NTP_SERVER` environment variable.
+
+By using NTP Pool Project, chances are you will connect to server raning from Stratum 1 to Stratum 4 servers depending on your location.
+
+### Other Public NTP Servers
+
+| Name              | NTP Server            | Website                                        |
+| ----------------- | --------------------- | ---------------------------------------------- |
+| Cloudflare NTP    | `time.cloudflare.com` | [Website](https://www.cloudflare.com/time/)    |
+| Google Public NTP | `time.google.com`     | [Website](https://developers.google.com/time/) |
+| NTP Pool Project  | `pool.ntp.org`        | [Website](https://www.ntppool.org/)            |
+
+**Other NTP Servers:**
+| Name          | NTP Server          | Website                                                                              |
+| ------------- | ------------------- | ------------------------------------------------------------------------------------ |
+| Facebook NTP  | `time.facebook.com` | [Website](https://engineering.fb.com/2020/03/18/production-engineering/ntp-service/) |
+| Apple NTP     | `time.apple.com`    |                                                                                      |
+| Microsoft NTP | `time.windows.com`  |                                                                                      |
+
+> If you are looking for Stratum One servers, you can check the following sites:
+> - https://support.ntp.org/Servers/StratumOneTimeServers
+> - https://www.advtimesync.com/docs/manual/stratum1.html
 
 ## License
 Licensed under the GNU General Public License v3.0.  
