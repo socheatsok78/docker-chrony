@@ -1,5 +1,3 @@
-<img src=".github/assets/ntppool.png" width="64px" /><br/>
-
 # About
 Just another container image for running NTP Server using `chrony` with support for Linux capabilities using `SYS_TIME` & `IPC_LOCK`.
 
@@ -42,6 +40,12 @@ You can disable this feature by setting the `SKIP_SETCAP_IPC_LOCK` environment v
 ## Prometheus Metrics
 
 The container exposes [Prometheus](https://prometheus.io/) metrics at `http://<container-ip>:9123/metrics` by default. The metrics are served by [chrony_exporter](https://github.com/SuperQ/chrony_exporter).
+
+# NTP Pool Project
+
+<img src=".github/assets/ntppool.png" width="64px" /><br/>
+
+By default, this container will syncronize time from pool.ntp.org.
 
 ## License
 Licensed under the GNU General Public License v3.0.  
