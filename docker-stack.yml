@@ -2,7 +2,7 @@
 
 services:
   ntp:
-    image: socheatsok78/chrony:dev
+    image: ghcr.io/socheatsok78/chrony:3.20
     environment:
       TZ: "UTC+0"
       LOGLEVEL: "0"
