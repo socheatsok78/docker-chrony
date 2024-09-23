@@ -10,10 +10,10 @@ You can configure chrony by setting the following environment variables:
 
 ### Configure NTP Servers
 
-By default, the container will use `time.google.com` as the NTP server as the server has Stratum value of `2`. You can use custom NTP servers by setting the following environment variable:
+By default, the container will use `pool.ntp.org` server. You can use custom NTP servers by setting the following environment variable:
 
 - `NTP_SERVER_COUNT`: Number of NTP servers to use. Default: `1`
-- `NTP_SERVER_#_ADDR`: NTP Server `#` address. Default: `NTP_SERVER_1_ADDR=time.google.com`
+- `NTP_SERVER_#_ADDR`: NTP Server `#` address. Default: `NTP_SERVER_1_ADDR=pool.ntp.org`
 - `NTP_SERVER_#_NTS`: Enable NTS (Network Time Security) for NTP Server `#`. Default: `NTP_SERVER_1_NTS=false`
 
 ### Chronyd Options
