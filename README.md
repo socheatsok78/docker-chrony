@@ -36,7 +36,7 @@ By default, this container will syncronize time from `pool.ntp.org` provided by 
 
 By using NTP Pool Project, chances are you will connect to server raning from Stratum 1 to Stratum 4 servers depending on your location.
 
-### Other Public NTP Servers
+### Public NTP Servers
 
 | Name              | NTP Server            | Website                                        |
 | ----------------- | --------------------- | ---------------------------------------------- |
@@ -58,7 +58,7 @@ By using NTP Pool Project, chances are you will connect to server raning from St
 
 ## Prometheus Metrics
 
-The container exposes [Prometheus](https://prometheus.io/) metrics at `http://<container-ip>:9123/metrics` by default. The metrics are served by [chrony_exporter](https://github.com/SuperQ/chrony_exporter).
+The metrics are served by [SuperQ/chrony_exporter](https://github.com/SuperQ/chrony_exporter), available at `http://<container-ip>:9123/metrics`.
 
 ## Container Capabilities
 The container can be configured to perform the following actions, and all of them are optional features.
