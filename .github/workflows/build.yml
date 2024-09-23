@@ -3,10 +3,13 @@ name: "Build"
 on:
   push:
   pull_request:
-  workflow_dispatch:
 
 jobs:
   build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     strategy:
       matrix:
         alpine: 
@@ -14,15 +17,51 @@ jobs:
           - "3.18"
           - "3.19"
           - "3.20"
-    permissions:
-      contents: read
-      packages: write
-    uses: socheatsok78/.github/.github/workflows/docker-bake-action.yml@main
-    with:
-      images: |
-        ghcr.io/socheatsok78/chrony
-      flavor: latest=false
-      tags: |
-        type=ref,event=branch
-        type=raw,value=${{ matrix.alpine }}
-    secrets: inherit
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate Docker metadata
+        id: docker-meta
+        uses: docker/metadata-action@v5
+        env:
+          ALPINE_VERSION: ${{ matrix.alpine }}
+        with:
+          images: |
+            ghcr.io/socheatsok78/chrony
+          flavor: latest=false
+          tags: |
+            type=ref,event=branch
+            type=raw,value=${{ matrix.alpine }}
+
+      - name: Generate GitHub metadata
+        id: github-meta
+        uses: dockerbakery/github-metadata-action@v2
+
+      - name: Build and push
+        uses: docker/bake-action@v4
+        with:
+          push: ${{ github.event_name != 'pull_request' }}
+          files: |
+            ./docker-bake.hcl
+            ${{ steps.docker-meta.outputs.bake-file }}
+            ${{ steps.github-meta.outputs.bake-file }}
+          set: |
+            *.cache-from=type=gha
+            *.cache-to=type=gha,mode=max
+
+      - name: Docker Metadata Summary
+        uses: dockerbakery/docker-metadata-summary@v1
