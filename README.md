@@ -73,6 +73,8 @@ With `IPC_LOCK` capability, this allows the container to lock memory. By default
 
 You can disable this feature by setting the `SKIP_SETCAP_IPC_LOCK` environment variable to `true`.
 
+You can read more about *Runtime privilege and Linux capabilities* in the documentation [here](https://docs.docker.com/engine/containers/run/#runtime-privilege-and-linux-capabilities).
+
 ## License
 Licensed under the GNU General Public License v3.0.  
 See [LICENSE](LICENSE) for more information.
