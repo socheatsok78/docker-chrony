@@ -2,7 +2,7 @@
 set -e
 ME=$(basename $0)
 CHRONY_CONF_FILE="/etc/chrony/chrony.conf"
-DEFAULT_NTP_SERVER="pool.ntp.org"
+DEFAULT_NTP_SERVER=${DEFAULT_NTP_SERVER:-"pool.ntp.org"}
 
 # Generate a default chrony configuration file
 {

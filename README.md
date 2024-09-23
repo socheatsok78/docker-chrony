@@ -11,11 +11,12 @@ You can configure chrony by setting the following environment variables:
 
 ### Configure NTP Servers
 
-By default, the container will use `pool.ntp.org` server. You can use custom NTP servers by setting the following environment variable:
+By default, the container will use `DEFAULT_NTP_SERVER` environment variable to set the default NTP server.
 
-- `NTP_SERVER_COUNT`: Number of NTP servers to use. Default: `1`
-- `NTP_SERVER_#_ADDR`: NTP Server `#` address. Default: `NTP_SERVER_1_ADDR=pool.ntp.org`
-- `NTP_SERVER_#_NTS`: Enable NTS (Network Time Security) for NTP Server `#`. Default: `NTP_SERVER_1_NTS=false`
+If you want to use multiple NTP servers, you can set the following environment variables:
+- `NTP_SERVER_COUNT`: Number of NTP servers to use. (Default unset)
+- `NTP_SERVER_#_ADDR`: NTP Server `#` address. (Required, if `NTP_SERVER_COUNT` > 0)
+- `NTP_SERVER_#_NTS`: Enable NTS (Network Time Security) for NTP Server `#`. (Optional, can be `true` or `false`)
 
 ### Chronyd Options
 
