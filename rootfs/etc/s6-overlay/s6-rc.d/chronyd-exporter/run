@@ -1,0 +1,5 @@
+#!/bin/sh
+exec s6-setuidgid chrony \
+  /bin/chrony_exporter \
+    --web.listen-address=:9123 \
+    --chrony.address=unix:///run/chrony/chronyd.sock
