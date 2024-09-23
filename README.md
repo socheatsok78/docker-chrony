@@ -1,6 +1,9 @@
 <img src=".github/assets/ntppool.png" width="200px" /><br/>
 
 # About
+
+Just another NTP Server using `chrony` with support for Linux capabilities using `SYS_TIME` & `IPC_LOCK`.
+
 This container runs [chrony](https://chrony-project.org/) on [Alpine Linux](https://alpinelinux.org/).
 
 [chrony](https://chrony-project.org/) is a versatile implementation of the Network Time Protocol (NTP). It can synchronise the system clock with NTP servers, reference clocks (e.g. GPS receiver), and manual input using wristwatch and keyboard. It can also operate as an NTPv4 (RFC 5905) server and peer to provide a time service to other computers in the network.
