@@ -10,6 +10,20 @@ x-chrony-service: &chrony-service
     LOGLEVEL: "0"
   networks:
     chrony-network:
+  deploy:
+    restart_policy:
+      condition: any
+      delay: 5s
+      max_attempts: 3
+      window: 120s
+    update_config:
+      parallelism: 1
+      delay: 10s
+      order: stop-first
+    rollback_config:
+      parallelism: 1
+      delay: 10s
+      order: stop-first
 
 services:
   server:
@@ -21,6 +35,12 @@ services:
         protocol: udp
     cap_add:
       - IPC_LOCK
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+      
 
   client:
     <<: *chrony-service
@@ -31,6 +51,8 @@ services:
       - SYS_TIME
     depends_on:
       - server
+    deploy:
+      mode: global
 
 networks:
   chrony-network:
