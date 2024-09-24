@@ -1,0 +1,20 @@
+#!/bin/bash
+ME=chronyd-healthcheck
+
+while true; do
+	sleep 5
+	if chronyc activity | grep '0 sources online' >/dev/null; then
+		if [ "${HEALTHCHECK_AUTOREFRESH:-false}" = true ]; then
+			echo "==> $ME: No sources online, refreshing sources"
+			chronyc refresh
+		fi
+	fi
+	sleep 1
+	if chronyc -n tracking | grep 'Not synchronised' >/dev/null; then
+		if [ "${HEALTHCHECK_AUTORESELECT:-false}" = true ]; then
+			echo "==> $ME: No sources online or not synchronised, reselecting sources"
+			chronyc reselect
+		fi
+	fi
+	sleep 1
+done
