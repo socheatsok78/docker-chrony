@@ -6,6 +6,19 @@ This container runs [chrony](https://chrony-project.org/) on [Alpine Linux](http
 ## What is Chrony?
 [chrony](https://chrony-project.org/) is a versatile implementation of the Network Time Protocol (NTP). It can synchronise the system clock with NTP servers, reference clocks (e.g. GPS receiver), and manual input using wristwatch and keyboard. It can also operate as an NTPv4 (RFC 5905) server and peer to provide a time service to other computers in the network.
 
+## Usage
+
+```sh
+docker run --name=chrony \
+    --publish=123:123/udp \
+    --cap-add SYS_TIME \ # Allow the container to update system time
+    --cap-add IPC_LOCK \ # Allow the container to lock memory
+    --tmpfs=/etc/chrony:rw,mode=1750 \
+    --tmpfs=/run/chrony:rw,mode=1750 \
+    --tmpfs=/var/lib/chrony:rw,mode=1750 \
+  socheatsok78/chrony:3.20
+```
+
 ## Configure Chrony
 You can configure chrony by setting the following environment variables:
 
@@ -77,5 +90,5 @@ You can disable this feature by setting the `SKIP_SETCAP_IPC_LOCK` environment v
 > You can read more about **Runtime privilege and Linux capabilities** in the documentation [here](https://docs.docker.com/engine/containers/run/#runtime-privilege-and-linux-capabilities).
 
 ## License
-Licensed under the GNU General Public License v3.0.  
+Licensed under the GNU General Public License v3.0.
 See [LICENSE](LICENSE) for more information.
