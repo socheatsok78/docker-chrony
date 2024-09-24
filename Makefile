@@ -7,7 +7,7 @@ run:
 		-p 9123:9123 \
 		-e S6_VERBOSITY=2 \
 		--tmpfs=/etc/chrony:rw,mode=1750 \
-		--tmpfs=/tmp/chrony:rw,mode=1750 \
+		--tmpfs=/run/chrony:rw,mode=1750 \
 		--tmpfs=/var/lib/chrony:rw,mode=1750 \
 	socheatsok78/chrony:dev
 
