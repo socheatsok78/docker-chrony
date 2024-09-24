@@ -2,46 +2,46 @@
 # LOGLEVEL environment variable is not present, so populate with chrony default (0)
 # chrony log levels: 0 (informational), 1 (warning), 2 (non-fatal error) and 3 (fatal error)
 if [ -z "${LOGLEVEL}" ]; then
-  LOGLEVEL=0
+	LOGLEVEL=0
 else
-  # confirm log level is between 0-3, since these are the only log levels supported
-  if [ "${LOGLEVEL}" -gt 3 ]; then
-    # level outside of supported range, let's set to default (0)
-    LOGLEVEL=0
-  fi
+	# confirm log level is between 0-3, since these are the only log levels supported
+	if [ "${LOGLEVEL}" -gt 3 ]; then
+		# level outside of supported range, let's set to default (0)
+		LOGLEVEL=0
+	fi
 fi
 
 if [ -z "$SKIP_SETCAP_SYS_TIME" ]; then
-  # Allow chronyd to set the system time
-  setcap cap_sys_time=+ep $(readlink -f $(which chronyd))
-  # In the case chronyd has been started in a container without SYS_TIME privileges
-  if ! chronyd --version 1>/dev/null 2>/dev/null; then
-    >&2 echo "==> The SYS_TIME capability has been disabled, please use --cap-add SYS_TIME to enable the feature"
-    >&2 echo "==>   This may cause chronyd to not be able to set the system time, and the following message"
-    >&2 echo "==>   will be displayed in the logs:"
-    >&2 echo "==>     - Disabled control of system clock"
-    >&2 echo "==>     - Could not step system clock"
-    >&2 echo "==>   You can ignore these messages if you are not using chronyd to set the system time"
-    setcap cap_sys_time=-ep $(readlink -f $(which chronyd))
-    SYS_TIME="-x"
-  else
-    echo "==>  The SYS_TIME capability has been enabled"
-    SYS_TIME=""
-  fi
+	# Allow chronyd to set the system time
+	setcap cap_sys_time=+ep $(readlink -f $(which chronyd))
+	# In the case chronyd has been started in a container without SYS_TIME privileges
+	if ! chronyd --version 1>/dev/null 2>/dev/null; then
+		>&2 echo "==> The SYS_TIME capability has been disabled, please use --cap-add SYS_TIME to enable the feature"
+		>&2 echo "==>   This may cause chronyd to not be able to set the system time, and the following message"
+		>&2 echo "==>   will be displayed in the logs:"
+		>&2 echo "==>     - Disabled control of system clock"
+		>&2 echo "==>     - Could not step system clock"
+		>&2 echo "==>   You can ignore these messages if you are not using chronyd to set the system time"
+		setcap cap_sys_time=-ep $(readlink -f $(which chronyd))
+		SYS_TIME="-x"
+	else
+		echo "==>  The SYS_TIME capability has been enabled"
+		SYS_TIME=""
+	fi
 fi
 
 if [ -z "$SKIP_SETCAP_IPC_LOCK" ]; then
-  # Allow mlock to avoid swapping chronyd memory to disk
-  setcap cap_ipc_lock=+ep $(readlink -f $(which chronyd))
-  # In the case chronyd has been started in a container without IPC_LOCK privileges
-  if ! chronyd --version 1>/dev/null 2>/dev/null; then
-    >&2 echo "==>  The IPC_LOCK capability has been disabled, please use --cap-add IPC_LOCK to enable the feature"
-    setcap cap_ipc_lock=-ep $(readlink -f $(which chronyd))
-    IPC_LOCK=""
-  else
-    echo "==>  The IPC_LOCK capability has been enabled"
-    IPC_LOCK="-m"
-  fi
+	# Allow mlock to avoid swapping chronyd memory to disk
+	setcap cap_ipc_lock=+ep $(readlink -f $(which chronyd))
+	# In the case chronyd has been started in a container without IPC_LOCK privileges
+	if ! chronyd --version 1>/dev/null 2>/dev/null; then
+		>&2 echo "==>  The IPC_LOCK capability has been disabled, please use --cap-add IPC_LOCK to enable the feature"
+		setcap cap_ipc_lock=-ep $(readlink -f $(which chronyd))
+		IPC_LOCK=""
+	else
+		echo "==>  The IPC_LOCK capability has been enabled"
+		IPC_LOCK="-m"
+	fi
 fi
 
 exec chronyd -u chrony -L ${LOGLEVEL} -d ${SYS_TIME} ${IPC_LOCK}
