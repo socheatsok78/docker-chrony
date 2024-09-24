@@ -25,7 +25,7 @@ if [ -z "$SKIP_SETCAP_SYS_TIME" ]; then
 		setcap cap_sys_time=-ep $(readlink -f $(which chronyd))
 		SYS_TIME="-x"
 	else
-		echo "==>  The SYS_TIME capability has been enabled"
+		echo "==> The SYS_TIME capability has been set"
 		SYS_TIME=""
 	fi
 fi
@@ -39,7 +39,7 @@ if [ -z "$SKIP_SETCAP_IPC_LOCK" ]; then
 		setcap cap_ipc_lock=-ep $(readlink -f $(which chronyd))
 		IPC_LOCK=""
 	else
-		echo "==>  The IPC_LOCK capability has been enabled"
+		echo "==> The IPC_LOCK capability has been set"
 		IPC_LOCK="-m"
 	fi
 fi
