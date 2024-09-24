@@ -30,7 +30,6 @@ x-chrony-service: &chrony-service
 services:
   server:
     <<: *chrony-service
-    hostname: time.docker.internal
     ports:
       - mode: host
         target: 123
@@ -42,10 +41,10 @@ services:
   client:
     <<: *chrony-service
     environment:
-      - NTP_POOL_COUNT=1
-      - NTP_POOL_1_ADDR=time.docker.internal
+      - DEFAULT_NTP_POOL_ADDR=tasks.server
     cap_add:
       - IPC_LOCK
+      - SYS_TIME
     depends_on:
       - server
 
