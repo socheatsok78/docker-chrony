@@ -10,6 +10,22 @@ x-chrony-service: &chrony-service
     LOGLEVEL: "0"
   networks:
     chrony-network:
+  volumes:
+    - type: tmpfs
+      target: /etc/chrony
+      tmpfs:
+        mode: 01750
+        size: 1e5
+    - type: tmpfs
+      target: /tmp/chrony
+      tmpfs:
+        mode: 01750
+        size: 1e5
+    - type: tmpfs
+      target: /var/lib/chrony
+      tmpfs:
+        mode: 01750
+        size: 1e5
   deploy:
     restart_policy:
       condition: any
@@ -33,6 +49,10 @@ services:
         target: 123
         published: 123
         protocol: udp
+      - mode: host
+        target: 9123
+        published: 9123
+        protocol: tcp
     cap_add:
       - IPC_LOCK
     deploy:
