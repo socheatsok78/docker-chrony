@@ -2,8 +2,9 @@
 set -e
 ME=$(basename $0)
 CHRONY_CONF_FILE="/etc/chrony/chrony.conf"
-DEFAULT_NTP_SERVER_NTS=${DEFAULT_NTP_SERVER_NTS:-"false"}
-DEFAULT_NTP_SERVER_ADDR=${DEFAULT_NTP_SERVER_ADDR:-"pool.ntp.org"}
+DEFAULT_NTP_POOL_ENABLED=${DEFAULT_NTP_POOL_ENABLED:-"true"}
+DEFAULT_NTP_POOL_NTS=${DEFAULT_NTP_POOL_NTS:-"false"}
+DEFAULT_NTP_POOL_ADDR=${DEFAULT_NTP_POOL_ADDR:-"pool.ntp.org"}
 
 # Generate a default chrony configuration file
 {
@@ -19,36 +20,66 @@ DEFAULT_NTP_SERVER_ADDR=${DEFAULT_NTP_SERVER_ADDR:-"pool.ntp.org"}
   echo
 } > ${CHRONY_CONF_FILE}
 
-# If NTP_SERVER_COUNT is not set, add the default NTP_SERVER
-if [ -z "${NTP_SERVER_COUNT}" ]; then
-  NTP_SERVER_COUNT=1
-  NTP_SERVER_1_NTS="${DEFAULT_NTP_SERVER_NTS}"
-  NTP_SERVER_1_ADDR="${DEFAULT_NTP_SERVER_ADDR}"
+# Generated default NTP Pool configuration
+if [[ -z "${NTP_POOL_COUNT}" ]] && [[ -z "${NTP_SERVER_COUNT}" ]]; then
+  if [ "${DEFAULT_NTP_POOL_ENABLED}" = true ]; then
+    echo "# Generated default NTP Pool configuration" >> ${CHRONY_CONF_FILE}
+    if [[ "${DEFAULT_NTP_POOL_NTS}" = true ]]; then
+      echo "pool "${DEFAULT_NTP_POOL_ADDR}" iburst nts" >> ${CHRONY_CONF_FILE}
+    else
+      echo "pool "${DEFAULT_NTP_POOL_ADDR}" iburst" >> ${CHRONY_CONF_FILE}
+    fi
+  fi
+fi
+
+# Loop for the number of NTP_POOL_COUNT and add the NTP_POOL_#_ADDR to the chrony.conf
+if [[ -n "${NTP_POOL_COUNT}" ]]; then
+  for i in $(seq 1 ${NTP_POOL_COUNT}); do
+    NTP_POOL_ADDR_VAR="NTP_POOL_${i}_ADDR"
+    NTP_POOL_NTS_VAR="NTP_POOL_${i}_NTS"
+    NTP_POOL_ADDR="${!NTP_POOL_ADDR_VAR}"
+    NTP_POOL_ADDR_CLEANED=${NTP_POOL_ADDR//\"}
+    NTP_POOL_NTS="${!NTP_POOL_NTS_VAR}"
+
+    if [[ -z "${NTP_POOL_ADDR}" ]]; then
+      2>&1 echo "==> $ME: ERROR: NTP_POOL_${i}_ADDR is not set, skipping..."
+      continue
+    fi
+
+    echo "# ${NTP_POOL_ADDR_VAR}" >> ${CHRONY_CONF_FILE}
+    if [[ "${NTP_POOL_NTS:-false}" = true ]]; then
+      echo "pool "${NTP_POOL_ADDR_CLEANED}" iburst nts" >> ${CHRONY_CONF_FILE}
+    else
+      echo "pool "${NTP_POOL_ADDR_CLEANED}" iburst" >> ${CHRONY_CONF_FILE}
+    fi
+  done
 fi
 
 # Loop for the number of NTP_SERVER_COUNT and add the NTP_SERVER_#_ADDR to the chrony.conf
-for i in $(seq 1 ${NTP_SERVER_COUNT}); do
-  NTP_SERVER_ADDR_VAR="NTP_SERVER_${i}_ADDR"
-  NTP_SERVER_NTS_VAR="NTP_SERVER_${i}_NTS"
-  NTP_SERVER_ADDR="${!NTP_SERVER_ADDR_VAR}"
-  NTP_SERVER_ADDR_CLEANED=${NTP_SERVER_ADDR//\"}
-  NTP_SERVER_NTS="${!NTP_SERVER_NTS_VAR}"
+if [[ -n "${NTP_SERVER_COUNT}" ]]; then
+  for i in $(seq 1 ${NTP_SERVER_COUNT}); do
+    NTP_SERVER_ADDR_VAR="NTP_SERVER_${i}_ADDR"
+    NTP_SERVER_NTS_VAR="NTP_SERVER_${i}_NTS"
+    NTP_SERVER_ADDR="${!NTP_SERVER_ADDR_VAR}"
+    NTP_SERVER_ADDR_CLEANED=${NTP_SERVER_ADDR//\"}
+    NTP_SERVER_NTS="${!NTP_SERVER_NTS_VAR}"
 
-  if [[ -z "${NTP_SERVER_ADDR}" ]]; then
-    2>&1 echo "==> $ME: ERROR: NTP_SERVER_${i}_ADDR is not set, skipping..."
-    continue
-  fi
-
-  if [[ "${NTP_SERVER_ADDR_CLEANED}" == "127\."* ]]; then
-    echo "# ${NTP_SERVER_ADDR_VAR}" >> ${CHRONY_CONF_FILE}
-    echo "server "${NTP_SERVER_ADDR_CLEANED} >> ${CHRONY_CONF_FILE}
-    echo "local stratum 10"    >> ${CHRONY_CONF_FILE}
-  else
-    echo "# ${NTP_SERVER_ADDR_VAR}" >> ${CHRONY_CONF_FILE}
-    if [[ "${NTP_SERVER_NTS:-false}" = true ]]; then
-      echo "server "${NTP_SERVER_ADDR_CLEANED}" iburst nts" >> ${CHRONY_CONF_FILE}
-    else
-      echo "server "${NTP_SERVER_ADDR_CLEANED}" iburst" >> ${CHRONY_CONF_FILE}
+    if [[ -z "${NTP_SERVER_ADDR}" ]]; then
+      2>&1 echo "==> $ME: ERROR: NTP_SERVER_${i}_ADDR is not set, skipping..."
+      continue
     fi
-  fi
-done
+
+    if [[ "${NTP_SERVER_ADDR_CLEANED}" == "127\."* ]]; then
+      echo "# ${NTP_SERVER_ADDR_VAR}" >> ${CHRONY_CONF_FILE}
+      echo "server "${NTP_SERVER_ADDR_CLEANED} >> ${CHRONY_CONF_FILE}
+      echo "local stratum 10"    >> ${CHRONY_CONF_FILE}
+    else
+      echo "# ${NTP_SERVER_ADDR_VAR}" >> ${CHRONY_CONF_FILE}
+      if [[ "${NTP_SERVER_NTS:-false}" = true ]]; then
+        echo "server "${NTP_SERVER_ADDR_CLEANED}" iburst nts" >> ${CHRONY_CONF_FILE}
+      else
+        echo "server "${NTP_SERVER_ADDR_CLEANED}" iburst" >> ${CHRONY_CONF_FILE}
+      fi
+    fi
+  done
+fi
