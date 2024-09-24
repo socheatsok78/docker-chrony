@@ -4,28 +4,12 @@
 # And not yet ready for production use.
 
 x-chrony-service: &chrony-service
-  image: socheatsok78/chrony:dev
+  image: socheatsok78/chrony:3.20
   environment:
     TZ: "UTC+0"
     LOGLEVEL: "0"
   networks:
     chrony-network:
-  volumes:
-    - type: tmpfs
-      target: /etc/chrony
-      tmpfs:
-        mode: 1750
-        size: 1e5
-    - type: tmpfs
-      target: /run/chrony
-      tmpfs:
-        mode: 1750
-        size: 1e5
-    - type: tmpfs
-      target: /var/lib/chrony
-      tmpfs:
-        mode: 1750
-        size: 1e5
 
 services:
   server:
