@@ -1,15 +1,16 @@
 #!/bin/sh
 set -e
 
-# Create the chrony run directory if it doesn't exist
+# create chrony run directory
 mkdir -p /run/chrony
 
-# confirm correct permissions on chrony run directory
-chown -R chrony:chrony /run/chrony
-chmod o-rx /run/chrony
-
-# remove previous pid file if it exist
-rm -f /run/chrony/chronyd.pid
+if [ -d /run/chrony ]; then
+	# confirm correct permissions on chrony run directory
+	chown -R chrony:chrony /run/chrony
+	chmod o-rx /run/chrony
+	# remove previous pid file if it exist
+	rm -f /var/run/chrony/chronyd.pid
+fi
 
 # confirm correct permissions on chrony variable state directory
 if [ -d /var/lib/chrony ]; then
