@@ -40,7 +40,6 @@ services:
       placement:
         constraints:
           - node.role == manager
-      
 
   client:
     <<: *chrony-service

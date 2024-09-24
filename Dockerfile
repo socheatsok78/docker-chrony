@@ -18,7 +18,3 @@ ENTRYPOINT [ "/init-shim" ]
 CMD [ "sleep", "infinity" ]
 
 ADD rootfs /
-
-VOLUME /etc/chrony
-VOLUME /run/chrony
-VOLUME /var/lib/chrony
