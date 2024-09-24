@@ -1,41 +1,53 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/swarmlibs/dockerstack-schema/main/schema/dockerstack-spec.json
 
+# This file is an example of how to use the chrony image in a Docker Swarm stack.
+# And not yet ready for production use.
+
+x-chrony-service: &chrony-service
+  image: socheatsok78/chrony:dev
+  environment:
+    TZ: "UTC+0"
+    LOGLEVEL: "0"
+  networks:
+    chrony-network:
+  volumes:
+    - type: tmpfs
+      target: /etc/chrony
+      tmpfs:
+        mode: 1750
+        size: 1e5
+    - type: tmpfs
+      target: /run/chrony
+      tmpfs:
+        mode: 1750
+        size: 1e5
+    - type: tmpfs
+      target: /var/lib/chrony
+      tmpfs:
+        mode: 1750
+        size: 1e5
+
 services:
-  ntp:
-    image: ghcr.io/socheatsok78/chrony:3.20
-    environment:
-      TZ: "UTC+0"
-      LOGLEVEL: "0"
-      NTP_SERVER_COUNT: "2"
-      NTP_SERVER_1_ADDR: "pool.ntp.org"
-      NTP_SERVER_1_NTS: "false"
-      NTP_SERVER_2_ADDR: "time.cloudflare.com"
-      NTP_SERVER_2_NTS: "true"
+  server:
+    <<: *chrony-service
+    hostname: time.docker.internal
     ports:
       - mode: host
         target: 123
         published: 123
         protocol: udp
-    networks:
-      chrony-network:
-    volumes:
-      - type: tmpfs
-        target: /etc/chrony
-        tmpfs:
-          mode: 1750
-          size: 1e5
-      - type: tmpfs
-        target: /run/chrony
-        tmpfs:
-          mode: 1750
-          size: 1e5
-      - type: tmpfs
-        target: /var/lib/chrony
-        tmpfs:
-          mode: 1750
-          size: 1e5
-    deploy:
-      mode: global
+    cap_add:
+      - IPC_LOCK
+
+  client:
+    <<: *chrony-service
+    environment:
+      - NTP_POOL_COUNT=1
+      - NTP_POOL_1_ADDR=time.docker.internal
+    cap_add:
+      - IPC_LOCK
+    depends_on:
+      - server
 
 networks:
   chrony-network:

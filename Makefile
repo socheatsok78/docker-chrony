@@ -9,3 +9,8 @@ run:
 		--tmpfs=/run/chrony:rw,mode=1750 \
 		--tmpfs=/var/lib/chrony:rw,mode=1750 \
 	socheatsok78/chrony:dev
+
+deploy:
+	docker stack deploy --prune -c docker-stack.yml ntp 
+remove:
+	docker stack rm ntp
