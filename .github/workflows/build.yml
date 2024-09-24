@@ -12,6 +12,7 @@ jobs:
         uses: actions-matrix/alpine-matrix-action@v1
     outputs:
       matrix: ${{ steps.alpine.outputs.matrix }}
+
   build:
     needs: generate
     runs-on: ubuntu-latest
@@ -53,9 +54,7 @@ jobs:
             docker.io/${{ github.actor }}/chrony
             ghcr.io/${{ github.actor }}/chrony
           flavor: latest=false
-          tags: |
-            type=ref,event=branch
-            type=raw,value=${{ matrix.version }}
+          tags: type=raw,value=${{ matrix.version }}
 
       - name: Generate GitHub metadata
         id: github-meta
