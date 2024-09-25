@@ -73,17 +73,18 @@ if [[ -n "${NTP_SERVER_COUNT}" ]]; then
 			continue
 		fi
 
-		if [[ "${NTP_SERVER_ADDR_CLEANED}" == "127\."* ]]; then
-			echo "# ${NTP_SERVER_ADDR_VAR}" >> ${CHRONY_CONF_FILE}
-			echo "server ${NTP_SERVER_ADDR_CLEANED}" >> ${CHRONY_CONF_FILE}
-			echo "local stratum 10"    >> ${CHRONY_CONF_FILE}
+		echo "# ${NTP_SERVER_ADDR_VAR}" >> ${CHRONY_CONF_FILE}
+		if [[ "${NTP_SERVER_NTS:-false}" = true ]]; then
+			echo "server ${NTP_SERVER_ADDR_CLEANED}" iburst nts" >> ${CHRONY_CONF_FILE}
 		else
-			echo "# ${NTP_SERVER_ADDR_VAR}" >> ${CHRONY_CONF_FILE}
-			if [[ "${NTP_SERVER_NTS:-false}" = true ]]; then
-				echo "server ${NTP_SERVER_ADDR_CLEANED}" iburst nts" >> ${CHRONY_CONF_FILE}
-			else
-				echo "server ${NTP_SERVER_ADDR_CLEANED}" iburst" >> ${CHRONY_CONF_FILE}
-			fi
+			echo "server ${NTP_SERVER_ADDR_CLEANED}" iburst" >> ${CHRONY_CONF_FILE}
 		fi
 	done
+fi
+
+if [[ "${LOCALSTRATUM:-false}" == true ]]; then
+	{
+		echo "# Serve time even if not synchronized to any NTP server."
+		echo "local stratum 10"
+	} >> ${CHRONY_CONF_FILE}
 fi
