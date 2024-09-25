@@ -91,6 +91,23 @@ You can disable this feature by setting the `SKIP_SETCAP_IPC_LOCK` environment v
 > [!NOTE]
 > You can read more about **Runtime privilege and Linux capabilities** in the documentation [here](https://docs.docker.com/engine/containers/run/#runtime-privilege-and-linux-capabilities).
 
+## Important Notes
+
+You may need to disable the host `Automatic Date & Time` setting to prevent the host from syncing time with the NTP server, instead, let the container handle the time sync.
+
+Here an example of how to disable the `Automatic Date & Time` setting on Ubuntu:
+
+```sh
+# Check the NTP service status
+timedatectl status
+
+# Disable the NTP service
+sudo timedatectl set-ntp 0
+
+# Enable the NTP service
+sudo timedatectl set-ntp 1
+```
+
 ## License
 Licensed under the GNU General Public License v3.0.
 See [LICENSE](LICENSE) for more information.
