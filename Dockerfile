@@ -19,6 +19,6 @@ CMD [ "sleep", "infinity" ]
 
 ADD rootfs /
 
-VOLUME /etc/chrony
+VOLUME /etc/chrony/sources.d
 VOLUME /var/lib/chrony
 VOLUME /var/log/chrony
