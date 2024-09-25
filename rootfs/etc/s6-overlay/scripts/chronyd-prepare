@@ -2,12 +2,12 @@
 set -e
 
 # create chrony run directory
-mkdir -p /run/chrony
+mkdir -p /var/run/chrony
 
-if [ -d /run/chrony ]; then
+if [ -d /var/run/chrony ]; then
 	# confirm correct permissions on chrony run directory
-	chown -R chrony:chrony /run/chrony
-	chmod o-rx /run/chrony
+	chown -R chrony:chrony /var/run/chrony
+	chmod o-rx /var/run/chrony
 	# remove previous pid file if it exist
 	rm -f /var/run/chrony/chronyd.pid
 fi
