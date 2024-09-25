@@ -20,6 +20,11 @@ services:
     cap_add:
       - IPC_LOCK
     deploy:
+      resources:
+        limits:
+          memory: 24M
+        reservations:
+          memory: 16M
       restart_policy:
         condition: any
         delay: 5s
