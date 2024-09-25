@@ -40,6 +40,11 @@ Alternatively, If you want to use multiple of other different NTP servers, you c
 - `NOCLIENTLOG`: This option disables logging of client requests and responses. Default: `false`
   > Specifies that client accesses are not to be logged. Normally they are logged, allowing statistics to be reported using the clients command in chronyc. This option also effectively disables server support for the NTP interleaved mode.
 
+### Advanced Configurations
+Some advanced configurations are not documented here, please take a look at the following files:
+- [rootfs/etc/s6-overlay/scripts/chronyd-init](./rootfs/etc/s6-overlay/scripts/chronyd-init)
+- [rootfs/etc/s6-overlay/s6-rc.d/chronyd/run](./rootfs/etc/s6-overlay/s6-rc.d/chronyd/run)
+
 ## NTP Pool Project
 
 <img src="./.github/assets/ntppool.png" width="64px" /><br/>
