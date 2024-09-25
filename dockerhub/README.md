@@ -109,4 +109,4 @@ sudo timedatectl set-ntp 1
 
 ## License
 Licensed under the GNU General Public License v3.0.
-See [LICENSE](LICENSE) for more information.
+See [LICENSE](https://github.com/socheatsok78/docker-chrony/raw/main/LICENSE) for more information.

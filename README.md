@@ -42,7 +42,7 @@ Alternatively, If you want to use multiple of other different NTP servers, you c
 
 ## NTP Pool Project
 
-<img src=".github/assets/ntppool.png" width="64px" /><br/>
+<img src="./.github/assets/ntppool.png" width="64px" /><br/>
 
 By default, this container will syncronize time from `pool.ntp.org` provided by the [NTP Pool Project](https://www.ntppool.org/). You can change the default NTP server by setting the `DEFAULT_NTP_POOL_ADDR` environment variable.
 
@@ -109,4 +109,4 @@ sudo timedatectl set-ntp 1
 
 ## License
 Licensed under the GNU General Public License v3.0.
-See [LICENSE](LICENSE) for more information.
+See [LICENSE](./LICENSE) for more information.
