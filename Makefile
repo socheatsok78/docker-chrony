@@ -1,4 +1,9 @@
-it: build run
+it: dockerhub build
+
+.PHONY: dockerhub
+dockerhub:
+	@bash hacks/dockerhub.sh
+
 build:
 	docker buildx bake dev --load
 run:
