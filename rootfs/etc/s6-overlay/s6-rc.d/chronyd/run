@@ -23,6 +23,7 @@ if [ -z "$SKIP_SETCAP_SYS_TIME" ]; then
 		>&2 echo "==>     - Could not step system clock"
 		>&2 echo "==>   You can ignore these messages if you are not using chronyd to set the system time"
 		setcap cap_sys_time=-ep $(readlink -f $(which chronyd))
+		# -x = Disable setting the system time
 		SYS_TIME="-x"
 	else
 		echo "==> The SYS_TIME capability has been set"
@@ -40,8 +41,12 @@ if [ -z "$SKIP_SETCAP_IPC_LOCK" ]; then
 		IPC_LOCK=""
 	else
 		echo "==> The IPC_LOCK capability has been set"
+		# -m = Lock chronyd memory to avoid swapping
 		IPC_LOCK="-m"
 	fi
 fi
 
-exec chronyd -u chrony -L ${LOGLEVEL} -d ${SYS_TIME} ${IPC_LOCK}
+# -L = Log level
+# -u = Run as user chrony
+# -d = Don't detach from terminal and log to stdout/stderr
+exec chronyd -L ${LOGLEVEL} -u chrony -d ${SYS_TIME} ${IPC_LOCK}
