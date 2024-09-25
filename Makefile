@@ -12,6 +12,6 @@ run:
 	socheatsok78/chrony:dev
 
 deploy:
-	docker stack deploy --prune -c docker-stack.yml ntp 
+	docker stack deploy --prune -c docker-stack.yml chrony
 remove:
-	docker stack rm ntp
+	docker stack rm chrony

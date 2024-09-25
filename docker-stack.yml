@@ -1,57 +1,33 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/swarmlibs/dockerstack-schema/main/schema/dockerstack-spec.json
 
-# This file is an example of how to use the chrony image in a Docker Swarm stack.
-# And not yet ready for production use.
-
-x-chrony-service: &chrony-service
-  image: socheatsok78/chrony:3.20
-  environment:
-    TZ: "UTC+0"
-    LOGLEVEL: "0"
-  networks:
-    chrony-network:
-  deploy:
-    restart_policy:
-      condition: any
-      delay: 5s
-      max_attempts: 3
-      window: 120s
-    update_config:
-      parallelism: 1
-      delay: 10s
-      order: stop-first
-    rollback_config:
-      parallelism: 1
-      delay: 10s
-      order: stop-first
-
 services:
-  server:
-    <<: *chrony-service
+  chrony:
+    image: socheatsok78/chrony:3.20
+    environment:
+      TZ: "UTC+0"
+      LOGLEVEL: "0"
     ports:
       - mode: host
         target: 123
         published: 123
         protocol: udp
+      - mode: host
+        target: 9123
+        published: 9123
+        protocol: tcp
     cap_add:
       - IPC_LOCK
     deploy:
-      mode: global
-      placement:
-        constraints:
-          - node.role == manager
-
-  client:
-    <<: *chrony-service
-    environment:
-      - DEFAULT_NTP_POOL_ADDR=tasks.server
-    cap_add:
-      - IPC_LOCK
-      - SYS_TIME
-    depends_on:
-      - server
-    deploy:
-      mode: global
-
-networks:
-  chrony-network:
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: stop-first
+      rollback_config:
+        parallelism: 1
+        delay: 10s
+        order: stop-first
