@@ -49,7 +49,11 @@ if [ -z "$SKIP_SETCAP_IPC_LOCK" ]; then
 	fi
 fi
 
+# -F = Enable system call filter (seccomp)
+#      in level 1 the process is killed when a forbidden system call is made,
+#      in level -1 the SIGSYS signal is thrown instead and
+#      in level 0 the filter is disabled (default 0).
 # -L = Log level
 # -u = Run as user chrony
 # -d = Don't detach from terminal and log to stdout/stderr
-exec chronyd -L ${LOGLEVEL} -u chrony -d ${SYS_TIME} ${IPC_LOCK}
+exec chronyd -F 1 -L ${LOGLEVEL} -u chrony -d ${SYS_TIME} ${IPC_LOCK}
