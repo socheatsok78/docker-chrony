@@ -21,3 +21,4 @@ ADD rootfs /
 
 VOLUME /etc/chrony
 VOLUME /var/lib/chrony
+VOLUME /var/log/chrony
