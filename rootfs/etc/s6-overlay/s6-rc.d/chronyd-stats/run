@@ -1,0 +1,14 @@
+#!/bin/bash
+ME=chronyd-stats
+
+sleep 15
+while true; do
+	date=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+	chronyc activity | while read line; do
+		echo "$date activity: $line"
+	done
+	chronyc -n tracking | while read line; do
+		echo "$date tracking: $line"
+	done
+	sleep 60
+done
