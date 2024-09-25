@@ -1,6 +1,6 @@
 #!/bin/bash
 set -x
-chronyc sources
+chronyc sources -v
 chronyc activity
 chronyc -n tracking
 cat /etc/chrony/chrony.conf
