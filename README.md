@@ -24,7 +24,7 @@ You can configure chrony by setting the following environment variables:
 
 ### Configure NTP Servers
 
-By default, the container will use `DEFAULT_NTP_SERVER_ADDR` environment variable to set the default NTP server. You can set this environment variable to the NTP server you want to use.
+By default, the container will use `DEFAULT_NTP_POOL_ADDR` environment variable to set the default NTP server. You can set this environment variable to the NTP server you want to use.
 
 Alternatively, If you want to use multiple of other different NTP servers, you can set the following environment variables:
 - `NTP_SERVER_COUNT`: Number of NTP servers to use. (Default unset)
@@ -32,7 +32,7 @@ Alternatively, If you want to use multiple of other different NTP servers, you c
 - `NTP_SERVER_#_NTS`: Enable NTS (Network Time Security) for NTP Server `#`. (Optional, can be `true` or `false`)
 
 > [!WARNING]
-> The `DEFAULT_NTP_SERVER_ADDR` environment variable will be ignored if `NTP_SERVER_COUNT` is set.
+> The `DEFAULT_NTP_POOL_ADDR` environment variable will be ignored if `NTP_SERVER_COUNT` is set.
 
 ### Chronyd Options
 
@@ -45,7 +45,7 @@ Alternatively, If you want to use multiple of other different NTP servers, you c
 
 <img src=".github/assets/ntppool.png" width="64px" /><br/>
 
-By default, this container will syncronize time from `pool.ntp.org` provided by the [NTP Pool Project](https://www.ntppool.org/). You can change the default NTP server by setting the `DEFAULT_NTP_SERVER_ADDR` environment variable.
+By default, this container will syncronize time from `pool.ntp.org` provided by the [NTP Pool Project](https://www.ntppool.org/). You can change the default NTP server by setting the `DEFAULT_NTP_POOL_ADDR` environment variable.
 
 By using NTP Pool Project, chances are you will connect to server raning from Stratum 1 to Stratum 4 servers depending on your location.
 
