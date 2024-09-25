@@ -71,9 +71,11 @@ By using NTP Pool Project, chances are you will connect to server raning from St
 > - https://support.ntp.org/Servers/StratumOneTimeServers
 > - https://www.advtimesync.com/docs/manual/stratum1.html
 
-## Prometheus Metrics
+## Monitoring
 
-The metrics are served by [SuperQ/chrony_exporter](https://github.com/SuperQ/chrony_exporter), available at `http://<container-ip>:9123/metrics`.
+The metrics are served by [SuperQ/chrony_exporter](https://github.com/SuperQ/chrony_exporter), available at `/metrics` on `9123` port. e.g. `http://localhost:9123/metrics`
+
+There is also a dashboard available for Grafana [here](https://grafana.com/grafana/dashboards/19186-chrony/).
 
 ## Container Capabilities
 The container can be configured to perform the following actions, and all of them are optional features.
