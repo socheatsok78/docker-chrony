@@ -15,9 +15,6 @@ docker run --name=chrony \
     --publish=123:123/udp \
     --cap-add SYS_TIME \ # Allow the container to update system time
     --cap-add IPC_LOCK \ # Allow the container to lock memory
-    --tmpfs=/etc/chrony:rw,mode=1750 \
-    --tmpfs=/run/chrony:rw,mode=1750 \
-    --tmpfs=/var/lib/chrony:rw,mode=1750 \
   socheatsok78/chrony:3.20
 ```
 
