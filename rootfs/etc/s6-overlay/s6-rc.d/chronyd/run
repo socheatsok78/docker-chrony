@@ -27,7 +27,10 @@ if [ -z "$SKIP_SETCAP_SYS_TIME" ]; then
 		SYS_TIME="-x"
 	else
 		echo "==> The SYS_TIME capability has been set"
-		SYS_TIME=""
+		# -s = Set the system clock from the computer’s real-time clock (RTC)
+		#      or to the last modification time of the file specified by
+		#      the driftfile directiv
+		SYS_TIME="-s"
 	fi
 fi
 
