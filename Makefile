@@ -6,11 +6,9 @@ ifneq ("$(wildcard docker-stack.override.yml)","")
 endif
 
 it: dockerhub build
-
 .PHONY: dockerhub
 dockerhub:
-	@bash hacks/dockerhub.sh
-
+	@bash dockerhub/README.sh
 build:
 	docker buildx bake dev --load
 run:
@@ -21,7 +19,6 @@ run:
 		--tmpfs=/etc/chrony:rw,mode=1750 \
 		--tmpfs=/var/lib/chrony:rw,mode=1750 \
 	socheatsok78/chrony:dev
-
 deploy:
 	docker stack deploy --prune $(DOCKER_STACK_FILES) chrony
 remove:
