@@ -16,7 +16,8 @@ docker run --name=chrony \
     --cap-add=SYS_TIME \
     --cap-add=IPC_LOCK \
   socheatsok78/chrony:3.20
-# or
+
+# Deploy to a Docker Swarm cluster
 docker service create --name=chrony \
     --publish=123:123/udp \
     --cap-add=SYS_TIME \
