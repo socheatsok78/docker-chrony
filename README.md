@@ -13,8 +13,15 @@ This container runs [chrony](https://chrony-project.org/) on [Alpine Linux](http
 ```sh
 docker run --name=chrony \
     --publish=123:123/udp \
-    --cap-add SYS_TIME \
-    --cap-add IPC_LOCK \
+    --cap-add=SYS_TIME \
+    --cap-add=IPC_LOCK \
+  socheatsok78/chrony:3.20
+// or
+docker service create --name=chrony \
+    --publish=123:123/udp \
+    --cap-add=SYS_TIME \
+    --cap-add=IPC_LOCK \
+    --mode=global \
   socheatsok78/chrony:3.20
 ```
 
