@@ -8,15 +8,16 @@ FROM alpine:${ALPINE_VERSION}
 RUN apk add --no-cache bash chrony curl libcap tzdata
 COPY --link --from=s6-overlay / /
 COPY --link --from=chrony-exporter /bin/chrony_exporter /bin/chrony_exporter
-EXPOSE 123/udp
-EXPOSE 9123/tcp
-# HEALTHCHECK CMD /docker-healthcheck.sh
-HEALTHCHECK CMD curl -s http://127.0.0.1:9123 >/dev/null || exit 1
-ENTRYPOINT [ "/init-shim" ]
-CMD [ "sleep", "infinity" ]
 
 ADD rootfs /
+ENTRYPOINT [ "/init-shim" ]
+CMD [ "sleep", "infinity" ]
+# HEALTHCHECK CMD /docker-healthcheck.sh
+HEALTHCHECK CMD curl -s http://127.0.0.1:9123 >/dev/null || exit 1
 
 VOLUME /etc/chrony/sources.d
 VOLUME /var/lib/chrony
 VOLUME /var/log/chrony
+
+EXPOSE 123/udp
+EXPOSE 9123/tcp
