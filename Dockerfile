@@ -2,11 +2,11 @@ ARG ALPINE_VERSION=latest
 ARG S6_OVERLAY_VERSION=v3.2.0.0-minimal
 
 FROM quay.io/superq/chrony-exporter AS chrony-exporter
-FROM socheatsok78/s6-overlay-distribution:${S6_OVERLAY_VERSION} AS s6-overlay
+FROM socheatsok78/s6-overlay-distribution:${S6_OVERLAY_VERSION} AS s6-overlay-distribution
 
 FROM alpine:${ALPINE_VERSION}
 RUN apk add --no-cache bash chrony curl libcap tzdata
-COPY --link --from=s6-overlay / /
+COPY --link --from=s6-overlay-distribution / /
 COPY --link --from=chrony-exporter /bin/chrony_exporter /bin/chrony_exporter
 
 ADD rootfs /
