@@ -8,13 +8,60 @@ This container runs [chrony](https://chrony-project.org/) on [Alpine Linux](http
 ## What is Chrony?
 [chrony](https://chrony-project.org/) is a versatile implementation of the Network Time Protocol (NTP). It can synchronise the system clock with NTP servers, reference clocks (e.g. GPS receiver), and manual input using wristwatch and keyboard. It can also operate as an NTPv4 (RFC 5905) server and peer to provide a time service to other computers in the network.
 
+[Source] | [Docker Hub] | [GitHub Container Registry]
+
+## Image
+
+| Registry                    | Image                       |
+| --------------------------- | --------------------------- |
+| [Docker Hub]                | socheatsok78/chrony         |
+| [GitHub Container Registry] | ghcr.io/socheatsok78/chrony |
+
+
+[Source]: https://github.com/socheatsok78/docker-chrony
+[Docker Hub]: https://hub.docker.com/r/socheatsok78/chrony
+[GitHub Container Registry]: https://github.com/socheatsok78/docker-chrony/pkgs/container/chrony
+
+Following platforms for this image are available:
+
+```bash
+$ docker run --rm mplatform/mquery socheatsok78/chrony:latest
+
+# Image: socheatsok78/chrony:latest
+#  * Manifest List: Yes (Image type: application/vnd.oci.image.index.v1+json)
+#  * Supported platforms:
+#    - linux/amd64
+#    - linux/arm64
+```
+
+## Releases
+
+The release versioning scheme is based on **Alpine** releases, and it will follow the same versioning as the base image. The build matrix is generated using [`actions-matrix/alpine-matrix-action`](https://github.com/marketplace/actions/alpine-matrix-action) action.
+
+Currently, the following versions are available:
+- `latest`
+- `edge`
+- `3.20`
+- `3.19`
+
+> [!IMPORTANT]
+> The release is automated on a weekly basis, and if there is a new version of the base image, the release will build and push the new version following the base image version.
+
 ## Usage
 
-```sh
+```bash
 docker run --name=chrony \
     --publish=123:123/udp \
-    --cap-add SYS_TIME \
-    --cap-add IPC_LOCK \
+    --cap-add=SYS_TIME \
+    --cap-add=IPC_LOCK \
+  socheatsok78/chrony:3.20
+
+# Deploy to a Docker Swarm cluster
+docker service create --name=chrony \
+    --publish=123:123/udp \
+    --cap-add=SYS_TIME \
+    --cap-add=IPC_LOCK \
+    --mode=global \
   socheatsok78/chrony:3.20
 ```
 
