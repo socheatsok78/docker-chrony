@@ -3,12 +3,10 @@ Just another container image for running NTP Server using `chrony` with support 
 
 This container runs [chrony](https://chrony-project.org/) on [Alpine Linux](https://alpinelinux.org/).
 
-[Source](https://github.com/socheatsok78/docker-chrony) | [Docker Hub](https://hub.docker.com/r/socheatsok78/chrony)
+[Source] | [Docker Hub] | [GitHub Container Registry]
 
 ## What is Chrony?
 [chrony](https://chrony-project.org/) is a versatile implementation of the Network Time Protocol (NTP). It can synchronise the system clock with NTP servers, reference clocks (e.g. GPS receiver), and manual input using wristwatch and keyboard. It can also operate as an NTPv4 (RFC 5905) server and peer to provide a time service to other computers in the network.
-
-[Source] | [Docker Hub] | [GitHub Container Registry]
 
 ## Image
 
