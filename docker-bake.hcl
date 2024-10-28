@@ -1,5 +1,5 @@
 variable "ALPINE_VERSION" { default = "latest" }
-variable "S6_OVERLAY_VERSION" { default = "v3.2.0.0-minimal" }
+variable "S6_OVERLAY_VERSION" { default = "v3.2.0.0" }
 
 target "docker-metadata-action" {}
 target "github-metadata-action" {}
