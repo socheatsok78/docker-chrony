@@ -1,9 +1,42 @@
 #!/bin/sh
+
+if [[ "${CHRONY_EXPORTER_COLLECTOR_TRACKING:-false}" == "true" ]]; then
+	echo "==> Disable chrony exporter tracking metrics"
+	CHRONY_EXPORTER_COLLECTOR_TRACKING="no-"
+else
+	echo "==> Enabled chrony exporter tracking metrics"
+	CHRONY_EXPORTER_COLLECTOR_TRACKING=""
+fi
+
+if [[ "${CHRONY_EXPORTER_COLLECTOR_SOURCES_METRICS:-false}" == "true" ]]; then
+	echo "==> Disable chrony exporter sources metrics"
+	CHRONY_EXPORTER_COLLECTOR_SOURCES_METRICS="no-"
+else
+	echo "==> Enabled chrony exporter sources metrics"
+	CHRONY_EXPORTER_COLLECTOR_SOURCES_METRICS=""
+fi
+
+if [[ "${CHRONY_EXPORTER_COLLECTOR_SERVERSTATS:-false}" == "true" ]]; then
+	echo "==> Disable chrony exporter serverstats metrics"
+	CHRONY_EXPORTER_COLLECTOR_SERVERSTATS="no-"
+else
+	echo "==> Enabled chrony exporter serverstats metrics"
+	CHRONY_EXPORTER_COLLECTOR_SERVERSTATS=""
+fi
+
+if [[ "${CHRONY_EXPORTER_COLLECTOR_DNS_LOOKUPS:-false}" == "true" ]]; then
+	echo "==> Disable chrony exporter reverse DNS lookups"
+	CHRONY_EXPORTER_COLLECTOR_DNS_LOOKUPS="no-"
+else
+	echo "==> Enabled chrony exporter reverse DNS lookups"
+	CHRONY_EXPORTER_COLLECTOR_DNS_LOOKUPS=""
+fi
+
 exec s6-setuidgid chrony \
 	/bin/chrony_exporter \
 		--web.listen-address=:9123 \
 		--chrony.address=unix:///run/chrony/chronyd.sock \
-		--collector.tracking \
-		--collector.sources \
-		--collector.serverstats \
-		--collector.dns-lookups
+		--${CHRONY_EXPORTER_COLLECTOR_TRACKING}collector.tracking \
+		--${CHRONY_EXPORTER_COLLECTOR_SOURCES_METRICS}collector.sources \
+		--${CHRONY_EXPORTER_COLLECTOR_SERVERSTATS}collector.serverstats \
+		--${CHRONY_EXPORTER_COLLECTOR_DNS_LOOKUPS}collector.dns-lookups
