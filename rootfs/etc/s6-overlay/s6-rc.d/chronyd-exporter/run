@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# --[no-]collector.tracking    Collect tracking metrics
 if [[ "${CHRONY_EXPORTER_COLLECTOR_TRACKING:-false}" == "true" ]]; then
 	echo "==> Disable chrony exporter tracking metrics"
 	CHRONY_EXPORTER_COLLECTOR_TRACKING="no-"
@@ -8,6 +9,7 @@ else
 	CHRONY_EXPORTER_COLLECTOR_TRACKING=""
 fi
 
+# --[no-]collector.sources    Collect sources metrics
 if [[ "${CHRONY_EXPORTER_COLLECTOR_SOURCES_METRICS:-false}" == "true" ]]; then
 	echo "==> Disable chrony exporter sources metrics"
 	CHRONY_EXPORTER_COLLECTOR_SOURCES_METRICS="no-"
@@ -16,6 +18,7 @@ else
 	CHRONY_EXPORTER_COLLECTOR_SOURCES_METRICS=""
 fi
 
+# --[no-]collector.serverstats    Collect serverstats metrics
 if [[ "${CHRONY_EXPORTER_COLLECTOR_SERVERSTATS:-false}" == "true" ]]; then
 	echo "==> Disable chrony exporter serverstats metrics"
 	CHRONY_EXPORTER_COLLECTOR_SERVERSTATS="no-"
@@ -24,6 +27,7 @@ else
 	CHRONY_EXPORTER_COLLECTOR_SERVERSTATS=""
 fi
 
+# --[no-]collector.dns-lookups    do reverse DNS lookups
 if [[ "${CHRONY_EXPORTER_COLLECTOR_DNS_LOOKUPS:-false}" == "true" ]]; then
 	echo "==> Disable chrony exporter reverse DNS lookups"
 	CHRONY_EXPORTER_COLLECTOR_DNS_LOOKUPS="no-"
