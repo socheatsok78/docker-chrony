@@ -16,8 +16,6 @@ run:
 		-p 123:123/udp \
 		-p 9123:9123 \
 		-e S6_VERBOSITY=2 \
-		--tmpfs=/etc/chrony:rw,mode=1750 \
-		--tmpfs=/var/lib/chrony:rw,mode=1750 \
 	socheatsok78/chrony:dev
 deploy:
 	docker stack deploy --prune $(DOCKER_STACK_FILES) chrony
